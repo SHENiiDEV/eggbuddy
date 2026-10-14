@@ -96,7 +96,7 @@ class PlayController extends Controller
             $this->shop->consumeItem($user, $data['item']);
 
             return $this->engine->useItem($pet, $data['item']);
-        }));
+        }, 5));
     }
 
     public function name(Request $request): JsonResponse

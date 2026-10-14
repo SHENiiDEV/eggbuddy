@@ -176,7 +176,7 @@ class PaymentService
             $this->invoices->issue($locked);
 
             return true;
-        });
+        }, 5);
 
         $payment->refresh();
 
@@ -199,7 +199,7 @@ class PaymentService
                 'failed_at' => now(),
                 'failure_reason' => $reason ? substr($reason, 0, 250) : null,
             ]);
-        });
+        }, 5);
 
         $payment->refresh();
     }
@@ -220,7 +220,7 @@ class PaymentService
                     $this->wallet->debit($locked->user, $take, CoinTransaction::REFUND, 'Refund: '.$locked->description, $locked);
                 }
             }
-        });
+        }, 5);
 
         $payment->refresh();
     }

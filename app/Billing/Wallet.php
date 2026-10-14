@@ -54,7 +54,7 @@ class Wallet
                 'reference_type' => $reference?->getMorphClass(),
                 'reference_id' => $reference?->getKey(),
             ]);
-        });
+        }, 5);
     }
 
     /** Coins already earned today from a given source (used for daily caps). */

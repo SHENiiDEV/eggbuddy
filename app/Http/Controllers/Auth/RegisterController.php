@@ -61,7 +61,7 @@ class RegisterController extends Controller
             $engine->newEgg($user);
 
             return $user;
-        });
+        }, 5);
 
         event(new Registered($user));
 

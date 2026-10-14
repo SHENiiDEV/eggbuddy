@@ -35,7 +35,7 @@ class Shop
         DB::transaction(function () use ($user, $type, $key, $skin) {
             $owned = UserSkin::create(['user_id' => $user->id, 'type' => $type, 'skin' => $key]);
             $this->wallet->debit($user, (int) $skin['price'], CoinTransaction::SKIN, ucfirst($type).' skin: '.$skin['name'], $owned);
-        });
+        }, 5);
     }
 
     public function equipSkin(User $user, string $type, string $key): void
@@ -67,7 +67,7 @@ class Shop
             $label = $quantity > 1 ? "{$quantity} × {$config['name']}" : $config['name'];
             $this->wallet->debit($user, $config['price'] * $quantity, CoinTransaction::ITEM, 'Treat: '.$label, $row);
             $row->increment('quantity', $quantity);
-        });
+        }, 5);
     }
 
     /** Take one item out of the bag. */

@@ -163,4 +163,6 @@ MAIL_FROM_ADDRESS=hello@your-domain.com
 - [ ] `PAYMENT_DEMO_ENABLED=false` и подключённый PSP
 - [ ] SMTP настроен, `QUEUE_CONNECTION=database` + `php artisan queue:work` (supervisor)
 - [ ] HTTPS, `APP_ENV=production`, `APP_DEBUG=false`
-- [ ] MySQL/PostgreSQL вместо SQLite (по желанию), бэкапы БД (инвойсы хранятся до 10 лет)
+- [ ] SQLite на проде: PHP 8.4+ (тогда транзакции идут в режиме IMMEDIATE), права на запись
+      у `www-data` на папку `database/` и ежедневный бэкап базы (инвойсы хранятся до 10 лет).
+      WAL и ожидание блокировок уже настроены в `config/database.php`

@@ -60,7 +60,7 @@ class InvoiceService
                 'total' => $total,
                 'currency' => $payment->currency,
             ]);
-        });
+        }, 5);
     }
 
     public function pdf(Invoice $invoice): string
