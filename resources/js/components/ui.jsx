@@ -2,6 +2,9 @@ import { Link } from '@inertiajs/react';
 import { Check, Eye, EyeOff, X } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 import { coins as fmtCoins } from '../lib/format.js';
+import mastercardLogo from '../../images/payments/mastercard.png';
+import pciDssLogo from '../../images/payments/pci-dss.png';
+import visaLogo from '../../images/payments/visa.png';
 
 export function Logo({ className = '', size = 'md', href = '/' }) {
   const s = size === 'lg' ? 'h-11' : size === 'sm' ? 'h-7' : 'h-9';
@@ -164,15 +167,21 @@ export function Badge({ children, className = '' }) {
   return <span className={`inline-flex items-center gap-1 rounded-full border-2 border-ink px-2.5 py-0.5 text-xs font-extrabold ${className}`}>{children}</span>;
 }
 
+const PAYMENT_LOGOS = [
+  { src: visaLogo, alt: 'Visa', height: 'h-[18px]' },
+  { src: mastercardLogo, alt: 'Mastercard', height: 'h-8' },
+  { src: pciDssLogo, alt: 'PCI DSS compliant', height: 'h-7' },
+];
+
 export function PaymentBadges({ className = '', dark = false }) {
-  const base = `rounded-lg border-2 px-2.5 py-1 text-[11px] font-extrabold tracking-wide ${dark ? 'border-cream/40 text-cream' : 'border-ink/20 bg-white text-ink'}`;
   return (
-    <div className={`flex flex-wrap items-center gap-2 ${className}`}>
-      <span className={`${base} italic`}>VISA</span>
-      <span className={base}>Mastercard</span>
-      <span className={base}>3-D Secure</span>
-      <span className={base}>SSL / TLS</span>
-    </div>
+    <ul className={`flex flex-wrap items-center gap-2 ${className}`} aria-label="Accepted cards and security">
+      {PAYMENT_LOGOS.map((logo) => (
+        <li key={logo.alt} className={`flex h-11 items-center rounded-xl bg-white px-3 ${dark ? '' : 'border-2 border-ink/15'}`}>
+          <img src={logo.src} alt={logo.alt} className={`${logo.height} w-auto`} loading="lazy" decoding="async" />
+        </li>
+      ))}
+    </ul>
   );
 }
 
