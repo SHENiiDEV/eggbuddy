@@ -1,0 +1,168 @@
+@import 'tailwindcss';
+
+@source '../views';
+@source '../js';
+
+@theme {
+  --font-display: 'Fredoka', ui-rounded, 'Nunito', system-ui, sans-serif;
+  --font-sans: 'Nunito', ui-rounded, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-pixel: 'Silkscreen', ui-monospace, monospace;
+
+  --color-ink: #3b2346;
+  --color-ink-soft: #5b4766;
+  --color-ink-muted: #7a6585;
+  --color-cream: #fff4ea;
+  --color-cream-deep: #ffe9d6;
+  --color-paper: #fffaf5;
+  --color-pink: #ff8fba;
+  --color-pink-soft: #ffd3e4;
+  --color-pink-deep: #f0609a;
+  --color-lilac: #c9b6ff;
+  --color-lilac-soft: #ece4ff;
+  --color-mint: #9fe3c2;
+  --color-mint-soft: #dcf7ea;
+  --color-lemon: #ffe27a;
+  --color-lemon-soft: #fff4c2;
+  --color-sky: #9bd5ff;
+  --color-sky-soft: #dff1ff;
+  --color-peach: #ffb89a;
+  --color-peach-soft: #ffe6da;
+  --color-lcd: #dcefc9;
+  --color-lcd-dark: #2f3b26;
+  --color-danger: #e5484d;
+  --color-success: #2f9e5b;
+
+  --radius-blob: 2rem;
+  --shadow-toy: 0 5px 0 0 var(--color-ink);
+  --shadow-toy-sm: 0 3px 0 0 var(--color-ink);
+  --shadow-toy-lg: 0 8px 0 0 var(--color-ink);
+
+  --animate-bob: bob 1.2s steps(2, jump-none) infinite;
+  --animate-float: float 5s ease-in-out infinite;
+  --animate-wiggle: wiggle 0.5s ease-in-out infinite;
+  --animate-pop: pop 0.35s cubic-bezier(.2, 1.6, .5, 1) both;
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-blink: blink 1s steps(2, jump-none) infinite;
+  --animate-rise: rise 1.4s ease-out forwards;
+
+  @keyframes bob { 0% { transform: translateY(0); } 100% { transform: translateY(-1px); } }
+  @keyframes float { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-14px) rotate(var(--r, 0deg)); } }
+  @keyframes wiggle { 0%, 100% { transform: rotate(-6deg); } 50% { transform: rotate(6deg); } }
+  @keyframes pop { 0% { transform: scale(.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes blink { 0% { opacity: 1; } 100% { opacity: 0; } }
+  @keyframes rise { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-36px); opacity: 0; } }
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'ss01';
+    min-height: 100dvh;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: var(--color-pink-soft);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-lilac);
+    outline-offset: 2px;
+  }
+
+  input[type='date']::-webkit-calendar-picker-indicator {
+    opacity: .6;
+    cursor: pointer;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-[3px] border-ink px-5 py-2.5 font-display text-base font-semibold text-ink transition select-none;
+    box-shadow: var(--shadow-toy);
+    transform: translateY(0);
+  }
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 6px 0 0 var(--color-ink); }
+  .btn:active { transform: translateY(4px); box-shadow: 0 1px 0 0 var(--color-ink); }
+  .btn:disabled { @apply cursor-not-allowed opacity-60; transform: none; }
+  .btn-primary { @apply bg-pink; }
+  .btn-secondary { @apply bg-white; }
+  .btn-dark { @apply bg-ink text-cream; }
+  .btn-lemon { @apply bg-lemon; }
+  .btn-mint { @apply bg-mint; }
+  .btn-sm { @apply px-3.5 py-1.5 text-sm; box-shadow: var(--shadow-toy-sm); }
+  .btn-sm:hover { box-shadow: 0 4px 0 0 var(--color-ink); }
+  .btn-sm:active { transform: translateY(2px); box-shadow: 0 1px 0 0 var(--color-ink); }
+  .btn-lg { @apply px-7 py-3.5 text-lg; }
+
+  .card {
+    @apply rounded-[1.75rem] border-[3px] border-ink bg-white;
+    box-shadow: var(--shadow-toy-lg);
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border-2 border-ink bg-white px-3 py-1 text-sm font-bold;
+  }
+
+  .input {
+    @apply block w-full rounded-2xl border-[3px] border-ink bg-white px-4 py-2.5 text-base text-ink placeholder:text-ink-muted/60 transition outline-none;
+  }
+  .input:focus { box-shadow: 0 0 0 4px var(--color-lilac-soft); border-color: var(--color-ink); }
+  .input[aria-invalid='true'] { border-color: var(--color-danger); box-shadow: 0 0 0 4px #fde2e2; }
+
+  .label { @apply mb-1.5 block text-sm font-extrabold text-ink; }
+
+  .pixel { font-family: var(--font-pixel); text-transform: uppercase; letter-spacing: .02em; }
+
+  .dot-grid {
+    background-image: radial-gradient(color-mix(in srgb, var(--color-ink) 12%, transparent) 1.2px, transparent 1.2px);
+    background-size: 22px 22px;
+  }
+
+  .squiggle {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='8' viewBox='0 0 24 8'%3E%3Cpath d='M0 4 Q6 0 12 4 T24 4' fill='none' stroke='%233b2346' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-position: 0 100%;
+    background-size: 24px 8px;
+    padding-bottom: 10px;
+  }
+
+  .prose-legal { @apply text-[15px] leading-7 text-ink-soft; }
+  .prose-legal h2 { @apply mt-10 mb-3 scroll-mt-28 font-display text-2xl font-semibold text-ink; }
+  .prose-legal h3 { @apply mt-6 mb-2 font-display text-lg font-semibold text-ink; }
+  .prose-legal p { @apply my-3; }
+  .prose-legal ul { @apply my-3 list-disc space-y-1.5 pl-6; }
+  .prose-legal ol { @apply my-3 list-decimal space-y-1.5 pl-6; }
+  .prose-legal a { @apply font-semibold text-ink underline decoration-pink decoration-2 underline-offset-2 hover:decoration-ink; }
+  .prose-legal strong { @apply text-ink; }
+  .prose-legal table { @apply my-5 w-full border-separate border-spacing-0 overflow-hidden rounded-2xl border-2 border-ink text-sm; }
+  .prose-legal th { @apply bg-lilac-soft px-3 py-2 text-left font-extrabold text-ink; }
+  .prose-legal td { @apply border-t-2 border-ink/10 px-3 py-2 align-top; }
+  .prose-legal code { @apply rounded-md bg-cream-deep px-1.5 py-0.5 text-[13px] text-ink; }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

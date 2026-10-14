@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /play
+Disallow: /shop
+Disallow: /top-up
+Disallow: /account
+Disallow: /payments
